@@ -20,11 +20,15 @@ export class ModalService {
     });
   }
 
-  isModalOpen():boolean {
-    return true
+  isModalOpen(id: string):boolean {
+    return !!this.modals.find(ele => ele.id === id)?.visible;
   }
 
-  toggleModal():void {
-    // this.visible = !this.visible;
+  toggleModal(id: string):void {
+    const modal = this.modals.find(ele => ele.id === id);
+    
+    if (modal) {
+      modal.visible = !modal.visible;
+    }
   }
 }

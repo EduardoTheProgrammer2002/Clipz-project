@@ -13,9 +13,9 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openModal($event: Event):void {
+  openModal($event: Event, id: string):void {
     $event.preventDefault();
-    this.modal.toggleModal();
+    this.modal.toggleModal(id);
   }
 
 }
