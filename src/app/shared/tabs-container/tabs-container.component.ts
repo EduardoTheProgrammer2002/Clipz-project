@@ -22,6 +22,13 @@ export class TabsContainerComponent implements AfterContentInit {
     }
   }
 
+  classGenerator(active: boolean) {
+    return{
+      'hover:text-white text-white bg-indigo-400': active,
+      'hover:text-indigo-400': !active
+    }
+  }
+
   selectTab(Tab: TabComponent) {
     this.tabs.forEach(
       tab => {
