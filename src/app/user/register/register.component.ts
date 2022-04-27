@@ -40,4 +40,8 @@ export class RegisterComponent {
      confirm_password: this.confirm_password,
      phoneNumber: this.phoneNumber
   })
+
+  register() {
+    console.log("Form submitted.")
+  }
 }
