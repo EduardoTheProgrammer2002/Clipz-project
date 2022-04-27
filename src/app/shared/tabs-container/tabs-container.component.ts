@@ -23,10 +23,10 @@ export class TabsContainerComponent implements AfterContentInit {
   }
 
   classGenerator(active: boolean) {
-    return{
-      'hover:text-white text-white bg-indigo-400': active,
-      'hover:text-indigo-400': !active
+    if (active) {
+      return 'hover:text-white text-white bg-indigo-400';
     }
+    return 'hover:text-indigo-400'
   }
 
   selectTab(Tab: TabComponent) {
