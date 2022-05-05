@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class RegisterComponent {
   constructor(private auth: AngularFireAuth) {}
+  inSubmission = false
 
   name = new FormControl('', [
     Validators.required,
@@ -52,12 +53,35 @@ export class RegisterComponent {
     this.showAlert = true
     this.alertMsg = 'Please wait! Your account is being created.'
     this.alertColor = 'blue'
+    this.inSubmission = true
 
     const { email, password } = this.registerForm.value
-    const userCred = this.auth.createUserWithEmailAndPassword(
-      email,
-      password
-    )
+    
+    try {
+      const userCred = await this.auth.createUserWithEmailAndPassword(
+        email,
+        password
+      )
 
+      console.log(userCred);
+      
+    } catch(e: (any | TypeError)) {
+      switch(e.code) {
+        case 'auth/email-already-in-use':
+          this.inSubmission = false
+          this.alertMsg = "Email already in use, try another one."
+          this.alertColor = "red"
+          break;
+        default:
+          this.inSubmission = false
+          this.alertMsg = "An unexpected error occurred. Please try again later"
+          this.alertColor = "red"
+          break;
+      }
+      return;
+    }
+
+    this.alertMsg = "Success! Your account has been created."
+    this.alertColor = 'green'
   }
 }
