@@ -10,14 +10,14 @@ import { map, Observable } from 'rxjs';
 })
 export class AuthService {
   private usersCollection: AngularFirestoreCollection<IUser>;
-  public isAuthenticated: Observable<boolean>;
+  public isAuthenticated$: Observable<boolean>;
 
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore
   ) {
     this.usersCollection = db.collection('users');
-    this.isAuthenticated = this.auth.user.pipe(
+    this.isAuthenticated$ = this.auth.user.pipe(
       map(user => !!user)
     )
    }
