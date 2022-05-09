@@ -23,6 +23,20 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setErrorMessage(codeError:string):void {
+    switch(codeError) {
+      case 'auth/user-not-found':
+        this.alertMsg = "The email address does not exist, please try another one."
+        break;
+      case 'auth/wrong-password':
+        this.alertMsg = "The password is incorrect, please try again."
+        break;
+      default: 
+        this.alertMsg = "An unexpected error ocurred, please try again later."
+        break;
+    }
+  }
+
   async login() {
     this.showAlert = true;
     this.alertMsg = "Wait a minute, we're loging you in.";
@@ -35,10 +49,10 @@ export class LoginComponent implements OnInit {
         this.credentials.email, this.credentials.password
       );
 
-    } catch (error) {
+    } catch (error: (any | TypeError)) {
       this.showAlert = true;
-      this.alertMsg = "An unexpected error ocurred, please try again later.";
       this.alertColor = "red";
+      this.setErrorMessage(error.code);
 
       this.inSubmission = false
       return
